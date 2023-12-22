@@ -24,6 +24,8 @@ This provides a simple mechanism to reuse code between builds cleanly.
 
 # Caveats
 
+## Issues with PEP-723 in pipx
+
 Due to <https://github.com/pypa/pipx/discussions/1162>, this doesn't work in its intended form yet:
 
 ```
@@ -39,6 +41,11 @@ $ poetry run python scripts.py format
 All done! ✨ 🍰 ✨
 4 files left unchanged.
 ```
+
+## This is not on pypi
+
+So the requirement dependency in the example above will not work.
+I assume you could add a dependency through git.
 
 # Future ideas
 
