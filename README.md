@@ -56,6 +56,17 @@ For example, run tests after linting successfully.
 
 Also commands could define which files they use as inputs and outputs, and only run if inputs change.
 
+## Standard interfaces
+
+`spl.python` and `spl.rust` can both define a `format` tasks.
+This makes working across projects easier.
+
+`spl.python` could detect multiple linters, or different ways to set up projects (either automatically or through configuration).
+
+## Recursive scripts
+
+Top-level `scripts.py` scripts can locate other `scripts.py` on subdirectories and propagate tasks.
+
 ## Drivers
 
 Commands might define different implementations.
