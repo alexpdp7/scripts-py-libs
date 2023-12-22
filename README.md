@@ -1,13 +1,15 @@
-Due to <https://github.com/pypa/pipx/discussions/1162>:
+Due to <https://github.com/pypa/pipx/discussions/1162>, this doesn't work in its intended form yet:
 
 ```
-$ ./scripts.py
-Fatal error...
+$ ./scripts.py format
+All done! ✨ 🍰 ✨
+4 files left unchanged.
 ```
 
-, but the second invocation works:
+For now, you have to:
 
 ```
-$ ./scripts.py
-hi
+$ poetry run python scripts.py format
+All done! ✨ 🍰 ✨
+4 files left unchanged.
 ```

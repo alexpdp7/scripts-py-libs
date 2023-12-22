@@ -2,7 +2,5 @@
 # /// pyproject
 # run.requirements = ["foo @ file://"]
 # ///
-import spl
-
-
-spl.foo()
+import spl.python  # noqa: unused
+from spl import __main__  # noqa: unused
