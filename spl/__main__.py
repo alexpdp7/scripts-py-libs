@@ -1,6 +1,10 @@
 import argparse
+import logging
 
 import spl
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 parser = argparse.ArgumentParser()

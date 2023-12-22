@@ -1,6 +1,5 @@
-import subprocess
-
 import spl
+from spl import utils
 
 
 @spl.register_command
@@ -10,4 +9,14 @@ def format(args):
 
 @spl.register_command
 def run_black(args):
-    subprocess.run(["black", "."], check=True)
+    utils.run_command(["black", "."])
+
+
+@spl.register_command
+def validate(args):
+    run_flake8(args)
+
+
+@spl.register_command
+def run_flake8(args):
+    utils.run_command(["flake8"])
