@@ -1,6 +1,8 @@
-#!/usr/bin/env -S pipx run
-# /// pyproject
-# run.requirements = ["foo @ file://"]
-# ///
-import spl.python  # noqa: unused
-from spl import __main__  # noqa: unused
+#!/usr/bin/env python3
+import os, subprocess, sys
+
+if not os.environ.get("SCRIPTS_PY_LIBS_BOOTSTRAPPED"):
+    sys.exit(subprocess.run(["./bootstrap"] + sys.argv).returncode)
+
+import spl.python
+from spl import __main__

@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+import os
+import pathlib
+import subprocess
+import sys
+import venv
+
+
+this = pathlib.Path(__file__).parent
+bootstrap_venv = this / ".bootstrap-venv"
+
+venv.EnvBuilder(with_pip=True).create(bootstrap_venv)
+
+subprocess.run([bootstrap_venv / "bin" / "pip", "install", "-U", "pip"], check=True)
+subprocess.run([bootstrap_venv / "bin" / "pip", "install", "-e", this], check=True)
+
+env = {
+    "SCRIPTS_PY_LIBS_BOOTSTRAPPED": "YES",
+    "PATH": os.environ["PATH"],
+}
+
+
+if os.environ.get("SPL_BOOTSTRAP_POETRY_WITH_PIPX"):
+    env["SPL_BOOTSTRAP_POETRY_WITH_PIPX"] = os.environ["SPL_BOOTSTRAP_POETRY_WITH_PIPX"]
+
+
+sys.exit(subprocess.run([bootstrap_venv / "bin" / "python"] + sys.argv[1:], env=env).returncode)

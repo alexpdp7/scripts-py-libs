@@ -1,51 +1,39 @@
-`scripts-py-libs` is an experiment in building a build tool with PEP-723 for bootstrapping.
+`scripts-py-libs` is a build tool experiment, designed with PEP-723 in mind.
 
-You create a `scripts.py` file in the root of the project like:
+# Usage
+
+I have not been able to use PEP-723 yet.
+I think `pipx` support is close, but not ready yet for this use case.
+In the meantime, you can use this project with some hacks.
+
+Add this repo as a submodule:
 
 ```
-#!/usr/bin/env -S pipx run
-# /// pyproject
-# run.requirements = ["scripts-py-libs"]
-# ///
+$ git submodule add https://github.com/alexpdp7/scripts-py-libs.git .scripts-py-libs
+```
+
+Create a `scripts.py` file in the root of the project like:
+
+```
+#!/usr/bin/env python3
+import os, subprocess, sys
+
+if not os.environ.get("SCRIPTS_PY_LIBS_BOOTSTRAPPED"):
+    sys.exit(subprocess.run([".scripts-py-libs/bootstrap"] + sys.argv).returncode)
+
 import spl.python
 from spl import __main__
 ```
 
-This script is executable, and uses pipx as a shebang to work as an executable.
-When running `scripts.py`, pipx downloads this library transparently.
+This script is executable, and uses a bootstrap script to simulate PEP-723.
 
 Then, you register that you want Python support, by importing `spl.python`.
 Finally, you invoke the main entry point of the library.
 
 `spl.python` defines `format` and `validate` subcommands that run Black and Flake8, respectively.
 
-With PEP-723, you can define your own modules like `spl.python`, with your own commands, that you can add as dependencies.
-This provides a simple mechanism to reuse code between builds cleanly.
-
-# Caveats
-
-## Issues with PEP-723 in pipx
-
-Due to <https://github.com/pypa/pipx/discussions/1162>, this doesn't work in its intended form yet:
-
-```
-$ ./scripts.py format
-All done! ✨ 🍰 ✨
-4 files left unchanged.
-```
-
-For now, you have to:
-
-```
-$ poetry run python scripts.py format
-All done! ✨ 🍰 ✨
-4 files left unchanged.
-```
-
-## This is not on pypi
-
-So the requirement dependency in the example above will not work.
-I assume you could add a dependency through git.
+With PEP-723, instead of using the bootstrap script, you will be able to depend on this module directly.
+You will also be able to depend on other modules which add more reusable commands.
 
 # Future ideas
 
